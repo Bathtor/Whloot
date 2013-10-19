@@ -1,4 +1,4 @@
-package com.larskroll
+package com.larskroll.whloot
 
 import akka.actor.{ActorSystem, Props}
 import akka.io.IO

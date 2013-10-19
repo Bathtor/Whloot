@@ -35,6 +35,7 @@
   <classpathentry kind="lib" path="/Users/sario/.ivy2/cache/com.chuusai/shapeless_2.10/jars/shapeless_2.10-1.2.4.jar"/>
   <classpathentry kind="lib" path="/Users/sario/.ivy2/cache/io.spray/spray-testkit/jars/spray-testkit-1.2-20131011.jar"/>
   <classpathentry kind="lib" path="/Users/sario/.ivy2/cache/io.spray/spray-json_2.10/jars/spray-json_2.10-1.2.5.jar"/>
+  <classpathentry kind="lib" path="/Users/sario/.ivy2/cache/com.beimin/eveapi/jars/eveapi-5.1.2.jar"/>
   <classpathentry kind="lib" path="/Users/sario/.ivy2/cache/org.scalatest/scalatest_2.10/jars/scalatest_2.10-1.9.2.jar"/>
   <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
   <classpathentry kind="output" path="bin"/>

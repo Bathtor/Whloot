@@ -22,6 +22,7 @@ object CsiBuild extends Build {
       resolvers += "spray nightly repo" at "http://nightlies.spray.io",
       resolvers += "sonatype releases"  at "https://oss.sonatype.org/content/repositories/releases/",
       resolvers += "sonatype snapshots" at "https://oss.sonatype.org/content/repositories/snapshots/",
+      resolvers += "eveapi" at "https://eveapi.googlecode.com/svn/m2/releases",
       libraryDependencies += "com.typesafe.akka" %% "akka-actor" % "2.2.0",
       libraryDependencies += "com.typesafe.akka" %%   "akka-slf4j" % "2.2.0",
       libraryDependencies += "com.typesafe.akka" %%   "akka-testkit" % "2.2.0",
@@ -37,7 +38,9 @@ object CsiBuild extends Build {
       libraryDependencies += "io.spray" % "spray-routing" % "1.2-20131011",
       libraryDependencies += "io.spray" % "spray-testkit" % "1.2-20131011",
       libraryDependencies += "io.spray" % "spray-util" % "1.2-20131011",
-      libraryDependencies += "io.spray" %% "spray-json" % "1.2.5"
+      libraryDependencies += "io.spray" %% "spray-json" % "1.2.5",
+      libraryDependencies += "com.beimin" % "eveapi" % "5.1.2",
+      libraryDependencies += "joda-time" % "joda-time" % "2.0"
       // libraryDependencies += "org.mindrot" % "jbcrypt" % "0.3m",
       // libraryDependencies += "com.oracle" % "ojdbc6" % "11.2.0.3",
       // libraryDependencies += "org.specs2" % "specs2_2.10.0-RC5" % "1.12.3",

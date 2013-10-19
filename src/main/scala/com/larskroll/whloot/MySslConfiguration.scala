@@ -1,9 +1,11 @@
-package com.larskroll
+package com.larskroll.whloot
 
 import java.security.{SecureRandom, KeyStore}
 import javax.net.ssl.{KeyManagerFactory, SSLContext, TrustManagerFactory}
 import spray.io._
 import akka.actor._
+import scala.Array.apply
+import spray.io.ServerSSLEngineProvider.apply
 
 
 // for SSL support (if enabled in application.conf)
