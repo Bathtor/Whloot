@@ -113,6 +113,12 @@ trait ServiceRouter extends HttpService {
 				case Pulled(txs, sells) => "Success: API pulled (TX: " + txs + ", Sells: " + sells + ")";
 				case StillCached(until) => "API still cached until " + until;
 				case PullFailed(e) => "Fail: " + e.getError();
+				case DiffFailed(msg) => "Fail: " + msg;
+				case Diff(added, removed) => added.map(asset => 
+					s"		Item(OpId: ${asset.opId}, ItemId: ${asset.itemId}, Name: ${asset.name}, Quantity: ${asset.quantity}) \n").foldLeft("Added: {\n")(_ + _) +
+					"} \n " + removed.map(asset => 
+					s"		Item(OpId: ${asset.opId}, ItemId: ${asset.itemId}, Name: ${asset.name}, Quantity: ${asset.quantity})").foldLeft("Removed: {\n")(_ + _) +
+					"} \n";
 			}
 		} catch {
 			case e: TimeoutException => "Fail: Operation Timeout";

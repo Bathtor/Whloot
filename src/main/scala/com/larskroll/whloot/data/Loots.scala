@@ -17,6 +17,16 @@ object LootQueries {
 	val selectForOp: SqlQuery =
 		SQL("""SELECT * FROM """ + tableName + """
 				WHERE opID = {op}""");
+	
+	val checkId: SqlQuery = 
+		SQL("""SELECT COUNT(*) FROM """ + tableName + """ WHERE opId = {id}""");
+	
+	val insert: SqlQuery = 
+		SQL("""INSERT INTO """ + tableName + """
+				VALUE ({itemId}, {opId}, {name}, {quantity})""");
+	
+	val clearOp: SqlQuery = SQL("""DELETE FROM """ + tableName + """
+			WHERE opId = {op}""");
 }
 
 object LootParsers {

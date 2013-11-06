@@ -76,17 +76,25 @@ class OpService extends Actor with ActorLogging {
 	private def checkNums(itemNumbers: Map[Long, Long], lootPrices: Map[Long, (Double, Long)]): Unit = {
 		lootPrices.foreach {
 			case (item, (price, num)) => {
-				val iNum = itemNumbers(item);
-				if (iNum != num) {
-					println("Something doesn't fit: " + item + " iN: " + iNum + " lP: " + num);
+				if (itemNumbers.contains(item)) {
+					val iNum = itemNumbers(item);
+					if (iNum != num) {
+						println("Something doesn't fit: " + item + " iN: " + iNum + " lP: " + num);
+					}
+				} else {
+					println("Something doesn't fit: " + item + " does not exists in loot");
 				}
 			}
 		}
 		itemNumbers.foreach {
 			case (item, iNum) => {
-				val num = lootPrices(item)._2;
-				if (iNum != num) {
-					println("Something doesn't fit: " + item + " iN: " + iNum + " lP: " + num);
+				if (lootPrices.contains(item)) {
+					val num = lootPrices(item)._2;
+					if (iNum != num) {
+						println("Something doesn't fit: " + item + " iN: " + iNum + " lP: " + num);
+					}
+				} else {
+					println("Something doesn't fit: " + item + " does not exists in transactions");
 				}
 			}
 		}

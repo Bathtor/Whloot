@@ -11,7 +11,7 @@ object TransactionQueries {
 	val tableName = "whloot_transactions";
 	
 	val insert: SqlQuery = 
-		SQL("""INSERT INTO """ + tableName + """
+		SQL("""INSERT IGNORE INTO """ + tableName + """
 				(transactionID, transactionTS, itemID, quantity, price) VALUES
 				({id}, {ts}, {item}, {quantity}, {price})""");
 	val selectLast: SqlQuery = 
