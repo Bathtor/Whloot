@@ -44,10 +44,10 @@ class ServiceRouterActor extends Actor with ServiceRouter with ActorLogging {
 
 trait ServiceRouter extends HttpService {
 	import BasicDirectives._
-	
+
 	val apiService = actorRefFactory.actorOf(Props[APIService]);
 	val opService = actorRefFactory.actorOf(Props[OpService]);
-	
+
 	implicit val timeout = Timeout(5 seconds);
 
 	val conf = Main.system.settings.config;
@@ -63,32 +63,48 @@ trait ServiceRouter extends HttpService {
 
 	val primaryRoute: Route = {
 		get {
-			path("calc"/IntNumber) {opId =>
+			path("calc" / IntNumber / IntNumber) { (start, end) =>
 				detachAndRespond { ctx =>
-						ctx.complete {
-							calcPayout(opId);
-						}
+					ctx.complete {
+						calcPayout(start, end);
 					}
-			} ~ pathPrefix("pull") {
-				path("transactions") {
+				}
+				//			} ~ path("calc" / IntNumber) { opId =>
+				//				detachAndRespond { ctx =>
+				//					ctx.complete {
+				//						calcPayout(opId, Int.MaxValue);
+				//					}
+				//				}
+			} ~ pathPrefix("transactions") {
+				path("pull") {
 					detachAndRespond { ctx =>
 						ctx.complete {
 							pullAPI(GetTransactions);
 						}
 					}
-				} ~ path("assets") {
+				}
+			} ~ pathPrefix("assets") {
+				path("pull") {
 					detachAndRespond { ctx =>
 						ctx.complete {
 							pullAPI(GetAssets);
 						}
 					}
-				}				
+				} ~ path("clear") {
+					detachAndRespond { ctx =>
+						ctx.complete {
+							pullAPI(ClearAssets);
+						}
+					}
+				}
+			} ~ path(Rest) { x =>
+				_.complete(x);
 			}
 		}
 	}
-	
-	private def calcPayout(sinceOp: Int): String = {
-		val f = opService ? CalcPayout(sinceOp);
+
+	private def calcPayout(sinceOp: Int, upToOp: Int): String = {
+		val f = opService ? CalcPayoutRange(sinceOp, upToOp);
 		try {
 			val res = Await.result(f, 30 seconds).asInstanceOf[Payout];
 			val perMemString = res.perMember.map {
@@ -104,7 +120,7 @@ trait ServiceRouter extends HttpService {
 			case e: TimeoutException => "Fail: Operation Timeout";
 		}
 	}
-	
+
 	private def pullAPI(r: ApiRequest): String = {
 		val f = apiService ? r;
 		try {
@@ -114,11 +130,13 @@ trait ServiceRouter extends HttpService {
 				case StillCached(until) => "API still cached until " + until;
 				case PullFailed(e) => "Fail: " + e.getError();
 				case DiffFailed(msg) => "Fail: " + msg;
-				case Diff(added, removed) => added.map(asset => 
-					s"		Item(OpId: ${asset.opId}, ItemId: ${asset.itemId}, Name: ${asset.name}, Quantity: ${asset.quantity}) \n").foldLeft("Added: {\n")(_ + _) +
-					"} \n " + removed.map(asset => 
-					s"		Item(OpId: ${asset.opId}, ItemId: ${asset.itemId}, Name: ${asset.name}, Quantity: ${asset.quantity})").foldLeft("Removed: {\n")(_ + _) +
-					"} \n";
+				case Diff(added, removed) =>
+					added.map(asset =>
+						s"		Item(OpId: ${asset.opId}, ItemId: ${asset.itemId}, Name: ${asset.name}, Quantity: ${asset.quantity}) \n").foldLeft("Added: {\n")(_ + _) +
+						"} \n " + removed.map(asset =>
+							s"		Item(OpId: ${asset.opId}, ItemId: ${asset.itemId}, Name: ${asset.name}, Quantity: ${asset.quantity})").foldLeft("Removed: {\n")(_ + _) +
+						"} \n";
+				case Cleared => "Success: Cleared";
 			}
 		} catch {
 			case e: TimeoutException => "Fail: Operation Timeout";

@@ -70,7 +70,7 @@ object ItemTransformers {
 						val id = q._1;
 						val quant = q._2.toDouble;
 						val s = sum.toDouble;
-						val lootQuant = loots(id);
+						val lootQuant = if (loots.contains(id)) { loots(id) } else { println("Loots doesn't contain " + id); 0 };
 						val itemPrice = if (loots.contains(id)) { (total * (quant/s))/ lootQuant} else { 0.0 }; 
 						newprices += (q._1 -> (itemPrice, lootQuant));
 					}

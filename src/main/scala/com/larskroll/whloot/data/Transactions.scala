@@ -19,7 +19,7 @@ object TransactionQueries {
 				ORDER BY transactionID DESC LIMIT 1""");
 	val selectSince: SqlQuery = 
 		SQL("""SELECT * FROM """ + tableName + """ 
-				WHERE transactionTS > {date}""");
+				WHERE transactionTS >= {date}""");
 }
 
 object TransactionParsers {

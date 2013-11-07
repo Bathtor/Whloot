@@ -11,8 +11,10 @@ import org.joda.time.Interval
 import org.joda.time.Instant
 import org.joda.time.DateTime
 import org.joda.time.Days
+import akka.actor.ActorContext
 
-case class CalcPayout(sinceOp: Int)
+case class CalcPayout(sinceOp: Int);
+case class CalcPayoutRange(startOp: Int, endOp: Int);
 case class Payout(totalIncome: Double, fuelDays: Int, fuelPart: Double, masterPart: Double, srpPart: Double, distributableIncome: Double, perMember: Map[Member, Double])
 
 class OpService extends Actor with ActorLogging {
@@ -25,17 +27,18 @@ class OpService extends Actor with ActorLogging {
 	implicit val timeout = Timeout(5 seconds);
 
 	def receive = {
-		case CalcPayout(sinceOp) => {
-			println(s"### Pulling for $sinceOp ###");
+		case CalcPayoutRange(startOp, endOp) => {
+			println(s"### Pulling for ($startOp, $endOp) ###");
 			NamedDB('mysql) localTxWithConnection { implicit conn =>
-				val res = OpQueries.selectOpsSince.on("since" -> sinceOp).parse(OpParsers.op *);
+				val res = OpQueries.selectOpsBetween.on("start" -> startOp, "end" -> endOp).parse(OpParsers.op *);
 				println("######## Temp Ops #######\n 	" + res.toString);
 				val ops = OpParsers.opGrouper(res) map { o =>
 					val loots = LootQueries.selectForOp.on("op" -> o.id).parse(LootParsers.full *);
 					Op(o.id, o.participants, loots.toSet);
 				};
 				println("######## Ops #######\n 	" + ops.toString);
-				val trans = TransactionQueries.selectSince.on("date" -> Ops.idAsDate(sinceOp).toString()).parse(TransactionParsers.full *);
+				val transDate = if (endOp == Int.MaxValue) startOp else endOp
+				val trans = TransactionQueries.selectSince.on("date" -> Ops.idAsDate(transDate).toString()).parse(TransactionParsers.full *);
 				println("######## Transactions #######\n 	" + trans.toString);
 				val sumTrans = trans.foldLeft(0.0) {
 					case (sum, t) => sum + (t.price * t.quantity)
@@ -58,7 +61,7 @@ class OpService extends Actor with ActorLogging {
 				println(f"######## Loot Prices Sum: ${sumLootPrices}%-,10.2f ISK #######\n 	");
 				val (totalIncome, lootPerPerson) = participationPercentage(ops, lootPrices);
 				println(f"######## Loot Per Person: ${lootPerPerson} %% #######\n 	");
-				val daysSincePayout = Days.daysBetween(new DateTime(Ops.idAsDate(sinceOp)), new Instant()).getDays();
+				val daysSincePayout = Days.daysBetween(new DateTime(Ops.idAsDate(startOp)), new Instant()).getDays();
 				val fuelPart = daysSincePayout * fuelCostPerDay;
 				val reducedIncome = totalIncome - fuelPart;
 				val masterPart = reducedIncome * masterWallet;

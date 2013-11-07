@@ -56,6 +56,10 @@ object OpQueries {
 	val selectOpsSince: SqlQuery =
 		SQL("""SELECT * FROM """ + opTable + """
 				WHERE opID >= {since}""");
+	
+	val selectOpsBetween: SqlQuery =
+		SQL("""SELECT * FROM """ + opTable + """
+				WHERE opID >= {start} AND opID <= {end}""");
 }
 
 object OpParsers {

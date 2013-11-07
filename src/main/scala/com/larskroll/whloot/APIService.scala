@@ -31,6 +31,7 @@ import com.larskroll.whloot.data.LootParsers
 trait ApiRequest
 case object GetAssets extends ApiRequest;
 case object GetTransactions extends ApiRequest;
+case object ClearAssets extends ApiRequest;
 // Response
 trait ApiResponse
 case class PullFailed(error: ApiError) extends ApiResponse;
@@ -38,6 +39,7 @@ case class StillCached(until: Date) extends ApiResponse;
 case class Pulled(txs: Int, sells: Int) extends ApiResponse;
 case class Diff(added: Set[Loot], removed: Set[Loot]) extends ApiResponse;
 case class DiffFailed(msg: String) extends ApiResponse;
+case object Cleared extends ApiResponse;
 
 class APIService extends Actor with ActorLogging {
 	import context._
@@ -57,6 +59,12 @@ class APIService extends Actor with ActorLogging {
 	private var transactionsCached: WalletTransactionsResponse = null;
 
 	def receive = {
+		case ClearAssets => {
+			NamedDB('mysql) localTxWithConnection { implicit conn =>
+				LootQueries.clearOp.on("op" -> Ops.ZERO).executeUpdate();
+				sender ! Cleared;
+			}
+		}
 		case GetAssets => {
 			if ((assetsCached != null) && assetsCached.getCachedUntil().after(new Date())) {
 				sender ! StillCached(assetsCached.getCachedUntil());
@@ -148,42 +156,46 @@ class APIService extends Actor with ActorLogging {
 			val newAssetMap = newAssets.map(asset => (asset.itemId -> asset)).toMap;
 			val oldAssets = LootQueries.selectForOp.on("op" -> Ops.ZERO).as(LootParsers.full *);
 			val oldAssetMap = oldAssets.map(asset => (asset.itemId -> asset)).toMap;
-			val diffAssets = newAssetMap map {case (id, asset) => {
-				if (oldAssetMap contains id) {
-					val oldAsset = oldAssetMap(id);
-					val diffAsset = Loot(opId, id, asset.name, asset.quantity - oldAsset.quantity);
-					if (diffAsset.quantity > 0) {
+			val diffAssets = newAssetMap map {
+				case (id, asset) => {
+					if (oldAssetMap contains id) {
+						val oldAsset = oldAssetMap(id);
+						val diffAsset = Loot(opId, id, asset.name, asset.quantity - oldAsset.quantity);
+						if (diffAsset.quantity > 0) {
+							added += diffAsset;
+						} else if (diffAsset.quantity < 0) {
+							removed += diffAsset;
+						}
+						diffAsset
+					} else {
+						val diffAsset = Loot(opId, id, asset.name, asset.quantity);
 						added += diffAsset;
-					} else if (diffAsset.quantity < 0) {
-						removed += diffAsset;
+						diffAsset
 					}
-					diffAsset
-				} else {
-					val diffAsset = Loot(opId, id, asset.name, asset.quantity);
-					added += diffAsset;
-					diffAsset
 				}
-			}};
-			oldAssetMap foreach {case (id, asset) => {
-				if (!(newAssetMap contains id)) {
-					removed += asset;
+			};
+			oldAssetMap foreach {
+				case (id, asset) => {
+					if (!(newAssetMap contains id)) {
+						removed += asset;
+					}
 				}
-			}};
+			};
 			// clear old state
 			LootQueries.clearOp.on("op" -> Ops.ZERO).executeUpdate();
 			// add new state
 			newAssets foreach (asset => {
-				LootQueries.insert.on("itemId" -> asset.itemId, 
-						"opId" -> asset.opId, 
-						"name" -> asset.name, 
-						"quantity" -> asset.quantity).executeUpdate();
+				LootQueries.insert.on("itemId" -> asset.itemId,
+					"opId" -> asset.opId,
+					"name" -> asset.name,
+					"quantity" -> asset.quantity).executeUpdate();
 			});
 			// add new op
 			diffAssets foreach (asset => {
-				LootQueries.insert.on("itemId" -> asset.itemId, 
-						"opId" -> asset.opId, 
-						"name" -> asset.name, 
-						"quantity" -> asset.quantity).executeUpdate();
+				LootQueries.insert.on("itemId" -> asset.itemId,
+					"opId" -> asset.opId,
+					"name" -> asset.name,
+					"quantity" -> asset.quantity).executeUpdate();
 			});
 		}
 		return (added.toSet, removed.toSet);
