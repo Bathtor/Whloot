@@ -9,25 +9,25 @@ case class Transaction(id: Long, ts: Date, itemId: Long, quantity: Long, price: 
 
 object TransactionQueries {
 	val tableName = "whloot_transactions";
-	
-	val insert: SqlQuery = 
+
+	val insert: SqlQuery =
 		SQL("""INSERT IGNORE INTO """ + tableName + """
 				(transactionID, transactionTS, itemID, quantity, price) VALUES
 				({id}, {ts}, {item}, {quantity}, {price})""");
-	val selectLast: SqlQuery = 
+	val selectLast: SqlQuery =
 		SQL("""SELECT * FROM """ + tableName + """ 
 				ORDER BY transactionID DESC LIMIT 1""");
-	val selectSince: SqlQuery = 
+	val selectSince: SqlQuery =
 		SQL("""SELECT * FROM """ + tableName + """ 
-				WHERE transactionTS >= {date}""");
+				WHERE transactionTS >= {date} AND transactionID >= {tid}""");
 }
 
 object TransactionParsers {
-	val full = long("transactionID") ~ 
-	date("transactionTS") ~ 
-	long("itemID") ~
-	long("quantity") ~
-	get[BigDecimal]("price") map {
-		case tid ~ ts ~ iid ~ q ~ p => Transaction(tid, ts, iid, q, p.doubleValue());
-	}
+	val full = long("transactionID") ~
+		date("transactionTS") ~
+		long("itemID") ~
+		long("quantity") ~
+		get[BigDecimal]("price") map {
+			case tid ~ ts ~ iid ~ q ~ p => Transaction(tid, ts, iid, q, p.doubleValue());
+		}
 }

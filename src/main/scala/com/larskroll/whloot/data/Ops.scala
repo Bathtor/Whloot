@@ -8,7 +8,10 @@ import org.joda.time.DateTime
 case class Member(id: Int, name: String)
 case class Op(id: Int, participants: Set[Member], loots: Set[Loot]) {
 	def idAsDate() = Ops.idAsDate(id);
+	def header = OpHeader(id, participants);
 }
+case class OpHeader(id: Int, participants: Set[Member])
+
 object Ops {
 	val ZERO = 0;
 
@@ -60,6 +63,9 @@ object OpQueries {
 	val selectOpsBetween: SqlQuery =
 		SQL("""SELECT * FROM """ + opTable + """
 				WHERE opID >= {start} AND opID <= {end}""");
+	
+	val selectOps: SqlQuery =
+		SQL("""SELECT * FROM """ + opTable);
 }
 
 object OpParsers {

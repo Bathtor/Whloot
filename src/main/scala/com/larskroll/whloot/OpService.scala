@@ -14,8 +14,12 @@ import org.joda.time.Days
 import akka.actor.ActorContext
 
 case class CalcPayout(sinceOp: Int);
-case class CalcPayoutRange(startOp: Int, endOp: Int);
+case class CalcPayoutRange(startOp: Int, endOp: Int, tidBound: Long);
 case class Payout(totalIncome: Double, fuelDays: Int, fuelPart: Double, masterPart: Double, srpPart: Double, distributableIncome: Double, perMember: Map[Member, Double])
+case class ListAssets(id: Int);
+case class AssetList(loots: List[Loot]);
+case object ListOps;
+case class OpList(ops: List[OpHeader]);
 
 class OpService extends Actor with ActorLogging {
 	import context._
@@ -27,7 +31,22 @@ class OpService extends Actor with ActorLogging {
 	implicit val timeout = Timeout(5 seconds);
 
 	def receive = {
-		case CalcPayoutRange(startOp, endOp) => {
+		case ListAssets(id) => {
+			NamedDB('mysql) localTxWithConnection {implicit conn =>
+				val loots = LootQueries.selectForOp.on("op" -> id).parse(LootParsers.full *);
+				sender ! AssetList(loots);
+			}
+		}
+		case ListOps => {
+			NamedDB('mysql) localTxWithConnection {implicit conn =>
+				val res = OpQueries.selectOps.parse(OpParsers.op *);
+				val ops = OpParsers.opGrouper(res) map { o =>
+					OpHeader(o.id, o.participants);
+				};
+				sender ! OpList(ops);
+			}
+		}
+		case CalcPayoutRange(startOp, endOp, tidBound) => {
 			println(s"### Pulling for ($startOp, $endOp) ###");
 			NamedDB('mysql) localTxWithConnection { implicit conn =>
 				val res = OpQueries.selectOpsBetween.on("start" -> startOp, "end" -> endOp).parse(OpParsers.op *);
@@ -38,7 +57,7 @@ class OpService extends Actor with ActorLogging {
 				};
 				println("######## Ops #######\n 	" + ops.toString);
 				val transDate = if (endOp == Int.MaxValue) startOp else endOp
-				val trans = TransactionQueries.selectSince.on("date" -> Ops.idAsDate(transDate).toString()).parse(TransactionParsers.full *);
+				val trans = TransactionQueries.selectSince.on("date" -> Ops.idAsDate(transDate).toString(), "tid" -> tidBound).parse(TransactionParsers.full *);
 				println("######## Transactions #######\n 	" + trans.toString);
 				val sumTrans = trans.foldLeft(0.0) {
 					case (sum, t) => sum + (t.price * t.quantity)

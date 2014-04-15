@@ -9,15 +9,15 @@
   <classpathentry kind="lib" path="/Users/sario/.ivy2/cache/com.typesafe.akka/akka-slf4j_2.10/bundles/akka-slf4j_2.10-2.2.0.jar"/>
   <classpathentry kind="lib" path="/Users/sario/.ivy2/cache/com.typesafe.akka/akka-testkit_2.10/bundles/akka-testkit_2.10-2.2.0.jar"/>
   <classpathentry kind="lib" path="/Users/sario/.ivy2/cache/play/anorm_2.10/jars/anorm_2.10-2.1.5.jar"/>
-  <classpathentry kind="lib" path="/Users/sario/.ivy2/cache/com.github.seratch/scalikejdbc_2.10/jars/scalikejdbc_2.10-1.6.10.jar"/>
+  <classpathentry kind="lib" path="/Users/sario/.ivy2/cache/com.github.seratch/scalikejdbc_2.10/jars/scalikejdbc_2.10-1.6.11.jar"/>
   <classpathentry kind="lib" path="/Users/sario/.ivy2/cache/commons-dbcp/commons-dbcp/jars/commons-dbcp-1.4.jar"/>
   <classpathentry kind="lib" path="/Users/sario/.ivy2/cache/commons-pool/commons-pool/jars/commons-pool-1.5.4.jar"/>
   <classpathentry kind="lib" path="/Users/sario/.ivy2/cache/org.slf4j/slf4j-api/jars/slf4j-api-1.7.5.jar"/>
   <classpathentry kind="lib" path="/Users/sario/.ivy2/cache/joda-time/joda-time/jars/joda-time-2.3.jar"/>
   <classpathentry kind="lib" path="/Users/sario/.ivy2/cache/org.joda/joda-convert/jars/joda-convert-1.4.jar"/>
-  <classpathentry kind="lib" path="/Users/sario/.ivy2/cache/com.github.seratch/scalikejdbc-interpolation_2.10/jars/scalikejdbc-interpolation_2.10-1.6.10.jar"/>
-  <classpathentry kind="lib" path="/Users/sario/.ivy2/cache/com.github.seratch/scalikejdbc-interpolation-core_2.10/jars/scalikejdbc-interpolation-core_2.10-1.6.10.jar"/>
-  <classpathentry kind="lib" path="/Users/sario/.ivy2/cache/com.github.seratch/scalikejdbc-interpolation-macro_2.10/jars/scalikejdbc-interpolation-macro_2.10-1.6.10.jar"/>
+  <classpathentry kind="lib" path="/Users/sario/.ivy2/cache/com.github.seratch/scalikejdbc-interpolation_2.10/jars/scalikejdbc-interpolation_2.10-1.6.11.jar"/>
+  <classpathentry kind="lib" path="/Users/sario/.ivy2/cache/com.github.seratch/scalikejdbc-interpolation-core_2.10/jars/scalikejdbc-interpolation-core_2.10-1.6.11.jar"/>
+  <classpathentry kind="lib" path="/Users/sario/.ivy2/cache/com.github.seratch/scalikejdbc-interpolation-macro_2.10/jars/scalikejdbc-interpolation-macro_2.10-1.6.11.jar"/>
   <classpathentry kind="lib" path="/Users/sario/.ivy2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.10.0.jar"/>
   <classpathentry kind="lib" path="/Users/sario/.ivy2/cache/mysql/mysql-connector-java/jars/mysql-connector-java-5.1.21.jar"/>
   <classpathentry kind="lib" path="/Users/sario/.ivy2/cache/org.slf4j/slf4j-simple/jars/slf4j-simple-1.7.5.jar"/>

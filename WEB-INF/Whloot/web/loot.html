@@ -1,0 +1,20 @@
+<polymer-element name="loot-list">
+  <template>
+    <style>
+      
+    </style>
+    <h3>Operation: {{opid}}</h3>
+<!--     <table> -->
+<!--       <thead><tr><th>ItemID</th><th>Item Name</th><th>Quantity</th></tr></thead> -->
+<!--       <tbody template iterate="{{loot in loots}}"> -->
+<!--         <tr><td>{{loot.itemId}}</td><td>{{loot.name}}</td><td>{{loot.quantity}}</td></tr> -->
+<!--       </tbody> -->
+<!--      </table> -->
+  <ul>
+    <template repeat="{{loot in loots}}">
+      <li>{{loot.name}} ({{loot.itemId}}) x{{loot.quantity}}</li>
+    </template>
+  </ul>
+  </template>
+  <script type="application/dart" src="loot.dart"></script>
+</polymer-element>

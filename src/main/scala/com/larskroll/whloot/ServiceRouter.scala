@@ -20,10 +20,13 @@ import spray.json.DefaultJsonProtocol._
 import scalikejdbc.ConnectionPool
 import spray.routing.ExceptionHandler
 import akka.actor.Props
+import scala.util.{ Try, Success, Failure }
+import com.larskroll.whloot.data._
 
 class ServiceRouterActor extends Actor with ServiceRouter with ActorLogging {
 
 	def actorRefFactory = context
+	def corsExp = context.system.settings.config.getString("whloot.routing.cors");
 
 	///////////////// DB Stuff //////////////////
 
@@ -42,13 +45,16 @@ class ServiceRouterActor extends Actor with ServiceRouter with ActorLogging {
 	}
 }
 
-trait ServiceRouter extends HttpService {
+trait ServiceRouter extends HttpService with CORSDirectives {
 	import BasicDirectives._
+	import WhlootJsonProtocol._
+
+	def corsExp: String;
 
 	val apiService = actorRefFactory.actorOf(Props[APIService]);
 	val opService = actorRefFactory.actorOf(Props[OpService]);
 
-	implicit val timeout = Timeout(5 seconds);
+	implicit val timeout = Timeout(30 seconds);
 
 	val conf = Main.system.settings.config;
 
@@ -56,68 +62,104 @@ trait ServiceRouter extends HttpService {
 	def debugHandler(implicit log: LoggingContext) = ExceptionHandler {
 		case e => ctx =>
 			log.warning("Request {} could not be handled normally", ctx.request);
+			e.printStackTrace();
 			ctx.complete(InternalServerError, "An unknown error occurred. We apologize for this inconvenience.");
 	}
 
 	val detachAndRespond = respondWithMediaType(`application/json`) & handleExceptions(debugHandler) & detach();
+	//val securityChecks = corsFilter("lars-kroll.com") | corsFilter("127.0.0.1");
 
 	val primaryRoute: Route = {
-		get {
-			path("calc" / IntNumber / IntNumber) { (start, end) =>
-				detachAndRespond { ctx =>
-					ctx.complete {
-						calcPayout(start, end);
-					}
-				}
-				//			} ~ path("calc" / IntNumber) { opId =>
-				//				detachAndRespond { ctx =>
-				//					ctx.complete {
-				//						calcPayout(opId, Int.MaxValue);
-				//					}
-				//				}
-			} ~ pathPrefix("transactions") {
-				path("pull") {
+		corsFilter(corsExp) {
+			get {
+				path("calc" / IntNumber / IntNumber / LongNumber) { (start, end, tidBound) =>
 					detachAndRespond { ctx =>
 						ctx.complete {
-							pullAPI(GetTransactions);
+							calcPayout(start, end, tidBound);
 						}
 					}
-				}
-			} ~ pathPrefix("assets") {
-				path("pull") {
+				} ~ path("calc" / IntNumber / IntNumber) { (start, end) =>
 					detachAndRespond { ctx =>
 						ctx.complete {
-							pullAPI(GetAssets);
+							calcPayout(start, end, 0);
 						}
 					}
-				} ~ path("clear") {
+					//			} ~ path("calc" / IntNumber) { opId =>
+					//				detachAndRespond { ctx =>
+					//					ctx.complete {
+					//						calcPayout(opId, Int.MaxValue);
+					//					}
+					//				}
+				} ~ path("calc" / IntNumber) { opId =>
 					detachAndRespond { ctx =>
 						ctx.complete {
-							pullAPI(ClearAssets);
+							calcPayout(opId, Int.MaxValue, 0);
 						}
 					}
+				} ~ pathPrefix("transactions") {
+					path("pull") {
+						detachAndRespond { ctx =>
+							ctx.complete {
+								pullAPI(GetTransactions);
+							}
+						}
+					}
+				} ~ path("ops") {
+					detachAndRespond { ctx =>
+						ctx.complete {
+							listOps();
+						}
+					}
+				} ~ path("assets") {
+					detachAndRespond { ctx =>
+						ctx.complete {
+							listAssets();
+						}
+					}
+				} ~ path("assets" / IntNumber) { opId =>
+					detachAndRespond { ctx =>
+						ctx.complete {
+							listAssets(opId);
+						}
+					}
+				} ~ pathPrefix("assets") {
+					path("pull") {
+						detachAndRespond { ctx =>
+							ctx.complete {
+								pullAPI(GetAssets);
+							}
+						}
+					} ~ path("clear") {
+						detachAndRespond { ctx =>
+							ctx.complete {
+								pullAPI(ClearAssets);
+							}
+						}
+					}
+				} ~ path(Rest) { x =>
+					_.complete(x);
 				}
-			} ~ path(Rest) { x =>
-				_.complete(x);
 			}
 		}
 	}
 
-	private def calcPayout(sinceOp: Int, upToOp: Int): String = {
-		val f = opService ? CalcPayoutRange(sinceOp, upToOp);
+	private def calcPayout(sinceOp: Int, upToOp: Int, tidBound: Long): Either[Payout, Failure[Payout]] = {
+		val f = opService ? CalcPayoutRange(sinceOp, upToOp, tidBound);
 		try {
 			val res = Await.result(f, 30 seconds).asInstanceOf[Payout];
+
 			val perMemString = res.perMember.map {
 				case (member, money) => f"			${member.name}: ${money}%-,10.2f ISK \n"
 			}.foldLeft("Distribution: \n ")(_ + _);
-			f"""Payout: \n
+			println(f"""Payout: \n
 				TotalIncome: ${res.totalIncome}%-,10.2f ISK \n
 				Fuel Costs: ${res.fuelPart}%-,10.2f ISK for ${res.fuelDays} days \n
 				Master Wallet: ${res.masterPart}%-,10.2f ISK / SRP Wallet: ${res.srpPart}%-,10.2f ISK \n
 				Income after expenses: ${res.distributableIncome}%-,10.2f ISK \n
-				${perMemString}%s""";
+				${perMemString}%s""");
+			return Left(res);
 		} catch {
-			case e: TimeoutException => "Fail: Operation Timeout";
+			case e: TimeoutException => Right(Failure(e));
 		}
 	}
 
@@ -140,6 +182,26 @@ trait ServiceRouter extends HttpService {
 			}
 		} catch {
 			case e: TimeoutException => "Fail: Operation Timeout";
+		}
+	}
+	
+	private def listAssets(opId: Int = Ops.ZERO): Either[List[Loot], Failure[List[Loot]]] = {
+		val f = opService ? ListAssets(opId);
+		try {
+			val res = Await.result(f, 30 seconds).asInstanceOf[AssetList];
+			Left(res.loots);
+		} catch {
+			case e: TimeoutException => Right(Failure(e));
+		}
+	}
+	
+	private def listOps(): Either[List[OpHeader], Failure[List[OpHeader]]] = {
+		val f = opService ? ListOps;
+		try {
+			val res = Await.result(f, 30 seconds).asInstanceOf[OpList];
+			Left(res.ops);
+		} catch {
+			case e: TimeoutException => Right(Failure(e));
 		}
 	}
 }

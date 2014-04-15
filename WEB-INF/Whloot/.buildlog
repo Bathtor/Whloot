@@ -1,0 +1,771 @@
+---
+build.dart --machine --changed=pubspec.yaml --changed=web/clickcounter.dart --changed=web/clickcounter.html --c...
+
+build.dart finished [2092 ms]
+
+---
+build.dart --machine --changed=pubspec.lock
+
+build.dart finished [3418 ms]
+
+---
+build.dart --machine --changed=web/test.dart
+
+build.dart finished [1699 ms]
+
+---
+build.dart --machine --changed=web/test.dart
+
+build.dart finished [913 ms]
+
+---
+build.dart --machine --changed=web/whloot.html
+[{"method":"warning","params":{"file":"web/whloot.html","message":"Only one \"application/dart\" script tag per document is allowed.","line":12,"charStart":313,"charEnd":361}}]
+build.dart finished [898 ms]
+
+---
+build.dart --machine --changed=web/whloot.html
+
+build.dart finished [921 ms]
+
+---
+build.dart --machine --changed=web/test.dart
+
+build.dart finished [924 ms]
+
+---
+build.dart --machine --changed=web/menubar.html
+
+build.dart finished [1910 ms]
+
+---
+build.dart --machine --changed=web/menubar.dart
+
+build.dart finished [939 ms]
+
+---
+build.dart --machine --changed=web/menubar.dart
+
+build.dart finished [875 ms]
+
+---
+build.dart --machine --changed=web/menubar.html
+[{"method":"error","params":{"file":"web/menubar.html","message":"Invalid name \"menubar\". Custom element names must have at least one dash and can't be any of the following names: annotation-xml, color-profile, font-face, font-face-src, font-face-uri, font-face-format, font-face-name, missing-glyph.","line":1,"charStart":0,"charEnd":32}}]
+build failed with errors: {Transform polymer (Linter) on Whloot|web/menubar.html threw error: Invalid name "menubar". Custom element names must have at least one dash and can't be any of the following names: annotation-xml, color-profile, font-face, font-face-src, font-face-uri, font-face-format, font-face-name, missing-glyph.}
+build.dart finished [921 ms]
+
+---
+build.dart --machine --changed=web/menubar.html
+
+build.dart finished [926 ms]
+
+---
+build.dart --machine --changed=web/menubar.dart
+
+build.dart finished [928 ms]
+
+---
+build.dart --machine --changed=web/whloot.html
+[{"method":"warning","params":{"file":"web/whloot.html","message":"definition for Polymer element with tag name \"menu-bar\" not found.","line":16,"charStart":456,"charEnd":466}}]
+build.dart finished [915 ms]
+
+---
+build.dart --machine --changed=web/whloot.html
+
+build.dart finished [970 ms]
+
+---
+build.dart --machine --changed=web/menubar.html
+
+build.dart finished [902 ms]
+
+---
+build.dart --machine --changed=web/menubar.html
+
+build.dart finished [1769 ms]
+
+---
+build.dart --machine --changed=web/menubar.html
+
+build.dart finished [962 ms]
+
+---
+build.dart --machine --changed=web/menubar.html
+
+build.dart finished [1795 ms]
+
+---
+build.dart --machine --changed=web/menubar.html
+
+build.dart finished [2171 ms]
+
+---
+build.dart --machine --changed=web/menubar.html
+
+build.dart finished [1010 ms]
+
+---
+build.dart --machine --changed=web/menubar.html
+
+build.dart finished [1457 ms]
+
+---
+build.dart --machine --changed=web/menubar.html
+
+build.dart finished [1303 ms]
+
+---
+build.dart --machine --changed=web/menubar.html
+
+build.dart finished [978 ms]
+
+---
+build.dart --machine --changed=web/menubar.html
+
+build.dart finished [1168 ms]
+
+---
+build.dart --machine --changed=web/menubar.html
+
+build.dart finished [1032 ms]
+
+---
+build.dart --machine --changed=web/menubar.html
+
+build.dart finished [2043 ms]
+
+---
+build.dart --machine --changed=web/menubar.html
+
+build.dart finished [1171 ms]
+
+---
+build.dart --machine --changed=web/menubar.html
+
+build.dart finished [1006 ms]
+
+---
+build.dart --machine --changed=web/whloot.html
+
+build.dart finished [997 ms]
+
+---
+build.dart --machine --changed=web/whloot.css
+
+build.dart finished [902 ms]
+
+---
+build.dart --machine --changed=web/whloot.css
+
+build.dart finished [931 ms]
+
+---
+build.dart --machine --changed=web/menubar.html
+
+build.dart finished [1016 ms]
+
+---
+build.dart --machine --changed=web/menubar.html
+
+build.dart finished [1102 ms]
+
+---
+build.dart --machine --changed=web/menubar.html
+
+build.dart finished [1963 ms]
+
+---
+build.dart --machine --changed=web/menubar.html
+
+build.dart finished [899 ms]
+
+---
+build.dart --machine --changed=web/menubar.html
+
+build.dart finished [1030 ms]
+
+---
+build.dart --machine --changed=web/menubar.html
+
+build.dart finished [965 ms]
+
+---
+build.dart --machine --changed=web/menubar.html
+
+build.dart finished [948 ms]
+
+---
+build.dart --machine --changed=web/menubar.dart
+
+build.dart finished [939 ms]
+
+---
+build.dart --machine --changed=web/menubar.html
+
+build.dart finished [957 ms]
+
+---
+build.dart --machine --changed=web/menubar.dart
+
+build.dart finished [2320 ms]
+
+---
+build.dart --machine --changed=web/menubar.dart
+
+build.dart finished [2579 ms]
+
+---
+build.dart --machine --changed=web/menubar.dart
+
+build.dart finished [2152 ms]
+
+---
+build.dart --machine --changed=web/menubar.dart
+
+build.dart finished [1121 ms]
+
+---
+build.dart --machine --changed=web/menubar.dart
+
+build.dart finished [2558 ms]
+
+---
+build.dart --machine --changed=web/menubar.dart
+
+build.dart finished [1071 ms]
+
+---
+build.dart --machine --changed=web/menubar.dart
+
+build.dart finished [1117 ms]
+
+---
+build.dart --machine --changed=web/menubar.html
+
+build.dart finished [943 ms]
+
+---
+build.dart --machine --changed=web/menubar.dart
+
+build.dart finished [942 ms]
+
+---
+build.dart --machine --changed=web/menubar.html
+
+build.dart finished [897 ms]
+
+---
+build.dart --machine --changed=web/menubar.html
+
+build.dart finished [959 ms]
+
+---
+build.dart --machine --changed=web/menubar.html
+
+build.dart finished [972 ms]
+
+---
+build.dart --machine --changed=web/menubar.html
+
+build.dart finished [945 ms]
+
+---
+build.dart --machine --changed=web/menubar.html
+
+build.dart finished [943 ms]
+
+---
+build.dart --machine --changed=web/whloot.html
+
+build.dart finished [943 ms]
+
+---
+build.dart --machine --changed=web/menubar.html
+
+build.dart finished [903 ms]
+
+---
+build.dart --machine --changed=web/menubar.html
+
+build.dart finished [963 ms]
+
+---
+build.dart --machine --changed=web/menubar.html
+
+build.dart finished [973 ms]
+
+---
+build.dart --machine --changed=web/menubar.html
+
+build.dart finished [899 ms]
+
+---
+build.dart --machine --changed=web/menubar.html
+
+build.dart finished [964 ms]
+
+---
+build.dart --machine --changed=web/menubar.html
+
+build.dart finished [989 ms]
+
+---
+build.dart --machine --changed=web/menubar.html
+
+build.dart finished [965 ms]
+
+---
+build.dart --machine --changed=web/menubar.dart
+
+build.dart finished [888 ms]
+
+---
+build.dart --machine --changed=web/ops.html
+
+build.dart finished [1025 ms]
+
+---
+build.dart --machine --changed=web/whloot.html
+
+build.dart finished [947 ms]
+
+---
+build.dart --machine --changed=web/ops.html
+
+build.dart finished [887 ms]
+
+---
+build.dart --machine --changed=web/loot.html
+
+build.dart finished [2550 ms]
+
+---
+build.dart --machine --changed=web/loot.dart
+
+build.dart finished [1318 ms]
+
+---
+build.dart --machine --changed=web/ops.html
+
+build.dart finished [2542 ms]
+
+---
+build.dart --machine --changed=web/ops.html
+
+build.dart finished [1206 ms]
+
+---
+build.dart --machine --changed=web/menubar.dart
+
+build.dart finished [905 ms]
+
+---
+build.dart --machine --changed=web/ops.html
+[{"method":"warning","params":{"file":"web/ops.html","message":"definition for Polymer element with tag name \"loot-list\" not found.","line":18,"charStart":465,"charEnd":493}}]
+build.dart finished [970 ms]
+
+---
+build.dart --machine --changed=web/loot.html
+[{"method":"warning","params":{"file":"web/loot.html","message":"Unexpected start tag (template) in table context caused voodoo mode.","line":7,"charStart":98,"charEnd":135}}]
+[{"method":"warning","params":{"file":"web/loot.html","message":"Unexpected end tag (template) in table context caused voodoo mode.","line":9,"charStart":216,"charEnd":227}}]
+[{"method":"warning","params":{"file":"web/loot.html","message":"Unexpected end tag (template). Ignored.","line":9,"charStart":216,"charEnd":227}}]
+[{"method":"warning","params":{"file":"web/loot.html","message":"Unexpected start tag (template) in table context caused voodoo mode.","line":7,"charStart":98,"charEnd":135}}]
+[{"method":"warning","params":{"file":"web/loot.html","message":"Unexpected end tag (template) in table context caused voodoo mode.","line":9,"charStart":216,"charEnd":227}}]
+[{"method":"warning","params":{"file":"web/loot.html","message":"Unexpected end tag (template). Ignored.","line":9,"charStart":216,"charEnd":227}}]
+build.dart finished [1026 ms]
+
+---
+build.dart --machine --changed=web/loot.html
+[{"method":"warning","params":{"file":"web/loot.html","message":"Unexpected table cell start tag (td) in the table body phase.","line":7,"charStart":103,"charEnd":107}}]
+[{"method":"warning","params":{"file":"web/loot.html","message":"Unexpected start tag (template) in table context caused voodoo mode.","line":8,"charStart":168,"charEnd":205}}]
+[{"method":"warning","params":{"file":"web/loot.html","message":"Unexpected end tag (template) in table context caused voodoo mode.","line":10,"charStart":286,"charEnd":297}}]
+[{"method":"warning","params":{"file":"web/loot.html","message":"Unexpected end tag (template). Ignored.","line":10,"charStart":286,"charEnd":297}}]
+[{"method":"warning","params":{"file":"web/loot.html","message":"Unexpected table cell start tag (td) in the table body phase.","line":7,"charStart":103,"charEnd":107}}]
+[{"method":"warning","params":{"file":"web/loot.html","message":"Unexpected start tag (template) in table context caused voodoo mode.","line":8,"charStart":168,"charEnd":205}}]
+[{"method":"warning","params":{"file":"web/loot.html","message":"Unexpected end tag (template) in table context caused voodoo mode.","line":10,"charStart":286,"charEnd":297}}]
+[{"method":"warning","params":{"file":"web/loot.html","message":"Unexpected end tag (template). Ignored.","line":10,"charStart":286,"charEnd":297}}]
+build.dart finished [1008 ms]
+
+---
+build.dart --machine --changed=web/loot.html
+[{"method":"warning","params":{"file":"web/loot.html","message":"Unexpected start tag (template) in table context caused voodoo mode.","line":8,"charStart":162,"charEnd":199}}]
+[{"method":"warning","params":{"file":"web/loot.html","message":"Unexpected end tag (template) in table context caused voodoo mode.","line":10,"charStart":280,"charEnd":291}}]
+[{"method":"warning","params":{"file":"web/loot.html","message":"Unexpected end tag (template). Ignored.","line":10,"charStart":280,"charEnd":291}}]
+[{"method":"warning","params":{"file":"web/loot.html","message":"Unexpected start tag (template) in table context caused voodoo mode.","line":8,"charStart":162,"charEnd":199}}]
+[{"method":"warning","params":{"file":"web/loot.html","message":"Unexpected end tag (template) in table context caused voodoo mode.","line":10,"charStart":280,"charEnd":291}}]
+[{"method":"warning","params":{"file":"web/loot.html","message":"Unexpected end tag (template). Ignored.","line":10,"charStart":280,"charEnd":291}}]
+build.dart finished [976 ms]
+
+---
+build.dart --machine --changed=web/loot.html
+[{"method":"warning","params":{"file":"web/loot.html","message":"Unexpected table cell start tag (th) in the table body phase.","line":7,"charStart":103,"charEnd":107}}]
+[{"method":"warning","params":{"file":"web/loot.html","message":"Unexpected start tag (template) in table context caused voodoo mode.","line":8,"charStart":168,"charEnd":205}}]
+[{"method":"warning","params":{"file":"web/loot.html","message":"Unexpected end tag (template) in table context caused voodoo mode.","line":10,"charStart":286,"charEnd":297}}]
+[{"method":"warning","params":{"file":"web/loot.html","message":"Unexpected end tag (template). Ignored.","line":10,"charStart":286,"charEnd":297}}]
+[{"method":"warning","params":{"file":"web/loot.html","message":"Unexpected table cell start tag (th) in the table body phase.","line":7,"charStart":103,"charEnd":107}}]
+[{"method":"warning","params":{"file":"web/loot.html","message":"Unexpected start tag (template) in table context caused voodoo mode.","line":8,"charStart":168,"charEnd":205}}]
+[{"method":"warning","params":{"file":"web/loot.html","message":"Unexpected end tag (template) in table context caused voodoo mode.","line":10,"charStart":286,"charEnd":297}}]
+[{"method":"warning","params":{"file":"web/loot.html","message":"Unexpected end tag (template). Ignored.","line":10,"charStart":286,"charEnd":297}}]
+build.dart finished [2324 ms]
+
+---
+build.dart --machine --changed=web/loot.html
+[{"method":"warning","params":{"file":"web/loot.html","message":"Unexpected table cell start tag (th) in the table body phase.","line":7,"charStart":105,"charEnd":109}}]
+[{"method":"warning","params":{"file":"web/loot.html","message":"Unexpected table cell start tag (th) in the table body phase.","line":7,"charStart":105,"charEnd":109}}]
+build.dart finished [1040 ms]
+
+---
+build.dart --machine --changed=web/loot.html
+
+build.dart finished [1308 ms]
+
+---
+build.dart --machine --changed=web/loot.html
+
+build.dart finished [1267 ms]
+
+---
+build.dart --machine --changed=web/loot.dart
+
+build.dart finished [2188 ms]
+
+---
+build.dart --machine --changed=web/loot.dart
+
+build.dart finished [981 ms]
+
+---
+build.dart --machine --changed=web/loot.dart
+
+build.dart finished [1575 ms]
+
+---
+build.dart --machine --changed=web/loot.dart
+
+build.dart finished [2441 ms]
+
+---
+build.dart --machine --changed=web/loot.dart
+
+build.dart finished [1432 ms]
+
+---
+build.dart --machine --changed=web/loot.html
+
+build.dart finished [2137 ms]
+
+---
+build.dart --machine --changed=web/loot.html
+
+build.dart finished [993 ms]
+
+---
+build.dart --machine --changed=web/loot.html
+
+build.dart finished [1152 ms]
+
+---
+build.dart --machine --changed=web/api.dart
+
+build.dart finished [1062 ms]
+
+---
+build.dart --machine --changed=web/api.dart
+
+build.dart finished [2216 ms]
+
+---
+build.dart --machine --changed=web/loot.dart
+
+build.dart finished [1160 ms]
+
+---
+build.dart --machine --changed=web/menubar.dart
+
+build.dart finished [1066 ms]
+
+---
+build.dart --machine --changed=web/api.dart
+
+build.dart finished [944 ms]
+
+---
+build.dart --machine --changed=web/whloot.dart --removed=web/api.dart
+
+build.dart finished [1053 ms]
+
+---
+build.dart --machine --changed=web/whloot.dart
+
+build.dart finished [2346 ms]
+
+---
+build.dart --machine --changed=web/whloot.dart
+
+build.dart finished [1753 ms]
+
+---
+build.dart --machine --changed=web/loot.dart
+
+build.dart finished [2160 ms]
+
+---
+build.dart --machine --changed=web/loot.dart
+
+build.dart finished [1133 ms]
+
+---
+build.dart --machine --changed=web/loot.dart
+
+build.dart finished [2466 ms]
+
+---
+build.dart --machine --changed=web/menubar.dart
+
+build.dart finished [1090 ms]
+
+---
+build.dart --machine --changed=web/whloot.dart
+
+build.dart finished [1079 ms]
+
+---
+build.dart --machine --changed=web/loot.dart
+
+build.dart finished [2127 ms]
+
+---
+build.dart --machine --changed=web/whloot.dart
+
+build.dart finished [2305 ms]
+
+---
+build.dart --machine --changed=web/whloot.dart
+
+build.dart finished [2372 ms]
+
+---
+build.dart --machine --changed=web/loot.dart
+
+build.dart finished [2544 ms]
+
+---
+build.dart --machine --changed=web/loot.dart
+
+build.dart finished [2243 ms]
+
+---
+build.dart --machine --changed=web/loot.dart
+
+build.dart finished [2291 ms]
+
+---
+build.dart --machine --changed=web/loot.dart
+
+build.dart finished [996 ms]
+
+---
+build.dart --machine --changed=web/loot.dart
+
+build.dart finished [1007 ms]
+
+---
+build.dart --machine --changed=web/loot.dart
+
+build.dart finished [2135 ms]
+
+---
+build.dart --machine --changed=web/loot.dart
+
+build.dart finished [1014 ms]
+
+---
+build.dart --machine --changed=web/loot.dart
+
+build.dart finished [1444 ms]
+
+---
+build.dart --machine --changed=web/loot.dart
+
+build.dart finished [2310 ms]
+
+---
+build.dart --machine --changed=web/loot.dart
+
+build.dart finished [997 ms]
+
+---
+build.dart --machine --changed=web/loot.dart
+
+build.dart finished [2601 ms]
+
+---
+build.dart --machine --changed=web/loot.dart
+
+build.dart finished [1198 ms]
+
+---
+build.dart --machine --changed=web/loot.dart
+
+build.dart finished [1098 ms]
+
+---
+build.dart --machine --changed=web/loot.dart
+
+build.dart finished [1309 ms]
+
+---
+build.dart --machine --changed=web/whloot.css
+
+build.dart finished [1075 ms]
+
+---
+build.dart --machine --changed=web/loot.dart
+
+build.dart finished [1082 ms]
+
+---
+build.dart --machine --changed=web/ops.html
+
+build.dart finished [1029 ms]
+
+---
+build.dart --machine --changed=web/loot.dart
+
+build.dart finished [1817 ms]
+
+---
+build.dart --machine --changed=web/ops.html
+
+build.dart finished [1771 ms]
+
+---
+build.dart --machine --changed=web/whloot.dart
+
+build.dart finished [2345 ms]
+
+---
+build.dart --machine --changed=web/loot.dart
+
+build.dart finished [976 ms]
+
+---
+build.dart --machine --changed=web/whloot.dart
+
+build.dart finished [2294 ms]
+
+---
+build.dart --machine --changed=web/whloot.dart
+
+build.dart finished [2227 ms]
+
+---
+build.dart --machine --changed=web/oplist.html
+
+build.dart finished [2719 ms]
+
+---
+build.dart --machine --changed=web/oplist.html
+
+build.dart finished [1062 ms]
+
+---
+build.dart --machine --changed=web/oplist.html
+
+build.dart finished [1042 ms]
+
+---
+build.dart --machine --changed=web/oplist.dart
+
+build.dart finished [1052 ms]
+
+---
+build.dart --machine --changed=web/whloot.dart
+
+build.dart finished [1139 ms]
+
+---
+build.dart --machine --changed=web/loot.dart
+
+build.dart finished [915 ms]
+
+---
+build.dart --machine --changed=web/whloot.dart
+
+build.dart finished [3773 ms]
+
+---
+build.dart --machine --changed=web/oplist.dart
+
+build.dart finished [3803 ms]
+
+---
+build.dart --machine --changed=web/ops.html
+[{"method":"warning","params":{"file":"web/ops.html","message":"definition for Polymer element with tag name \"op-list\" not found.","line":18,"charStart":465,"charEnd":474}}]
+build.dart finished [2477 ms]
+
+---
+build.dart --machine --changed=web/ops.html
+
+build.dart finished [2130 ms]
+
+---
+build.dart --machine --changed=web/whloot.dart
+
+build.dart finished [2463 ms]
+
+---
+build.dart --machine --changed=web/whloot.dart
+
+build.dart finished [2881 ms]
+
+---
+build.dart --machine --changed=web/whloot.dart
+
+build.dart finished [2481 ms]
+
+---
+build.dart --machine --changed=web/whloot.dart
+
+build.dart finished [1271 ms]
+
+---
+build.dart --machine --changed=web/whloot.dart
+
+build.dart finished [1509 ms]
+
+---
+build.dart --machine --changed=web/whloot.dart
+
+build.dart finished [1114 ms]
+
+---
+build.dart --machine --changed=web/oplist.html
+
+build.dart finished [1202 ms]
+
+---
+build.dart --machine --changed=web/whloot.dart
+
+build.dart finished [1069 ms]
+
+---
+build.dart --machine --changed=web/oplist.html
+[{"method":"warning","params":{"file":"web/oplist.html","message":"definition for Polymer element with tag name \"loot-list\" not found.","line":15,"charStart":336,"charEnd":364}}]
+build.dart finished [1113 ms]
+
+---
+build.dart --machine --changed=web/oplist.html
+[{"method":"warning","params":{"file":"web/oplist.html","message":"definition for Polymer element with tag name \"loot-list\" not found.","line":15,"charStart":343,"charEnd":371}}]
+build.dart finished [966 ms]
+
+---
+build.dart --machine --changed=web/oplist.dart
+[{"method":"warning","params":{"file":"web/oplist.html","message":"definition for Polymer element with tag name \"loot-list\" not found.","line":15,"charStart":343,"charEnd":371}}]
+build.dart finished [2231 ms]
+
+---
+build.dart --machine --full
+[{"method":"warning","params":{"file":"web/oplist.html","message":"definition for Polymer element with tag name \"loot-list\" not found.","line":15,"charStart":343,"charEnd":371}}]
+build.dart finished [1380 ms]
+
