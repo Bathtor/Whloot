@@ -769,3 +769,30 @@ build.dart --machine --full
 [{"method":"warning","params":{"file":"web/oplist.html","message":"definition for Polymer element with tag name \"loot-list\" not found.","line":15,"charStart":343,"charEnd":371}}]
 build.dart finished [1380 ms]
 
+---
+build.dart --machine --full
+Unable to open file: /Users/lkroll/Documents/Programming/Whloot/WEB-INF/Whloot/packages/polymer/builder.dart'file:///Users/lkroll/Documents/Programming/Whloot/WEB-INF/Whloot/build.dart': error: line 1 pos 1: library handler failed
+import 'package:polymer/builder.dart';
+^
+build.dart finished [85 ms]
+
+---
+build.dart --machine --full
+[{"method":"warning","params":{"file":"web/oplist.html","message":"definition for Polymer element with tag name \"loot-list\" not found.","line":15,"charStart":343,"charEnd":371}}]
+build.dart finished [4100 ms]
+
+---
+build.dart --machine --changed=pubspec.lock
+[{"method":"warning","params":{"file":"web/oplist.html","message":"definition for Polymer element with tag name \"loot-list\" not found.","line":15,"charStart":343,"charEnd":371}}]
+build.dart finished [1044 ms]
+
+---
+build.dart --machine --changed=build/web/clickcounter.dart --changed=build/web/clickcounter.html --changed=buil...
+[{"method":"warning","params":{"file":"web/oplist.html","message":"definition for Polymer element with tag name \"loot-list\" not found.","line":15,"charStart":343,"charEnd":371}}]
+build.dart finished [1296 ms]
+
+---
+build.dart --machine --full
+[{"method":"warning","params":{"file":"web/oplist.html","message":"definition for Polymer element with tag name \"loot-list\" not found.","line":15,"charStart":343,"charEnd":371}}]
+build.dart finished [1829 ms]
+

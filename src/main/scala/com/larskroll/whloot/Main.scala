@@ -3,6 +3,7 @@ package com.larskroll.whloot
 import akka.actor.{ActorSystem, Props}
 import akka.io.IO
 import spray.can.Http
+import com.larskroll.neo4j.Neo4J
 
 object Main extends App with MySslConfiguration {
 
@@ -15,6 +16,8 @@ object Main extends App with MySslConfiguration {
 	
 	// the handler actor replies to incoming HttpRequests
 	val handler = system.actorOf(Props[ServiceRouterActor], "service-router");
+	
+	Neo4J.init(system);
 
 	
 	// create a new HttpServer using our handler tell it where to bind to

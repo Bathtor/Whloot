@@ -16,8 +16,8 @@
         </encoder>
     </appender> -->
 
-    <logger name="akka" level="INFO" />
-    <logger name="spray" level="INFO" />
+    <logger name="akka" level="DEBUG" />
+    <logger name="spray" level="DEBUG" />
 
     <root level="DEBUG">
         <appender-ref ref="CONSOLE"/>

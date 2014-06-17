@@ -35,6 +35,7 @@ object CsiBuild extends Build {
       //libraryDependencies += "org.scalaz" %% "scalaz-core" % "6.0.4",
       libraryDependencies += "io.spray" % "spray-can" % "1.2-20131011", // <-- this is supposed to be a SNAPSHOT, but for some reason SBT doesn't resolve it properly -.-
       libraryDependencies += "io.spray" % "spray-caching" % "1.2-20131011",
+      libraryDependencies += "io.spray" % "spray-client" % "1.2-20131011",
       libraryDependencies += "io.spray" % "spray-routing" % "1.2-20131011",
       libraryDependencies += "io.spray" % "spray-testkit" % "1.2-20131011",
       libraryDependencies += "io.spray" % "spray-util" % "1.2-20131011",

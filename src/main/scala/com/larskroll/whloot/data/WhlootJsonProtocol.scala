@@ -4,7 +4,7 @@ import spray.json._
 import com.larskroll.whloot.Payout
 
 object WhlootJsonProtocol extends DefaultJsonProtocol {
-	import DefaultJsonProtocol._
+	//import DefaultJsonProtocol._
 	
 	//implicit val memberFormat = jsonFormat2(Member);
 	implicit object MemberFormat extends JsonFormat[Member] {
@@ -14,4 +14,9 @@ object WhlootJsonProtocol extends DefaultJsonProtocol {
 	implicit val lootFormat = jsonFormat4(Loot);
 	implicit val opFormat = jsonFormat2(OpHeader);
 	implicit val payoutFormat = jsonFormat7(Payout);
+	
+	implicit val solarSystemFormat = jsonFormat3(SolarSystem);
+	implicit val fullSolarSystemFormat = jsonFormat7(FullSolarSystem);
+	implicit val routeFormat = jsonFormat2(Route);
+	implicit val multiRouteFormat = jsonFormat2(MultiRoute);
 }
