@@ -1,3 +1,6 @@
+.classpath
+.project
+
 *.class
 *.log
 
@@ -12,5 +15,21 @@ project/plugins/project/
 # Scala-IDE specific
 .scala_dependencies
 
+# Eclipse specific
+.settings
+.cache
+
 # Other
 src/main/resources/application.conf
+.DS_STORE
+nb-configuration.xml
+
+# Dart
+packages
+pubspec.lock  // Except for application packages
+.project
+.buildlog
+*.js_
+*.js.deps
+*.js.map
+*.dart.js
