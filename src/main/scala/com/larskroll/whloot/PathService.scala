@@ -49,14 +49,20 @@ class PathService extends Actor with ActorLogging {
                                 None
                             } else {
                                 val ids = txRes.results.flatMap(_.extractField[Int]("id(s)"));
-                                val aId = ids(0);
-                                val bId = ids(1);
-                                //
-                                // Get Path
-                                //
-                                val aNode = Graph.node(aId);
-                                val bNode = Graph.node(bId);
-                                Graph.path(aNode, bNode, "GATE", `out`, `shortestPath`(100));
+                                if (ids.size != 2) {
+                                    println("Result has errors: " + txRes);
+                                    sender ! PathError(txRes.errors.foldLeft("Errors encountered in query: ")(_ + _ + "\n"));
+                                    None
+                                } else {
+                                    val aId = ids(0);
+                                    val bId = ids(1);
+                                    //
+                                    // Get Path
+                                    //
+                                    val aNode = Graph.node(aId);
+                                    val bNode = Graph.node(bId);
+                                    Graph.path(aNode, bNode, "GATE", `out`, `shortestPath`(100));
+                                }
                             }
                         }
                     }

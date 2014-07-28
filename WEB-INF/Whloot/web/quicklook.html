@@ -1,0 +1,63 @@
+<polymer-element name="quick-look">
+  <template>
+    <style>
+      .ordertable {
+        width: 100%;
+      }
+      .ordertable thead {
+        font-weight: bold;
+      }
+    </style>
+    <p id="keyP">
+      Current System: <input type="text" id="systemField" value="{{system}}" />
+    </p>
+    <p id="keyP">
+      Item: <input type="text" id="itemField" value="{{item}}"/>
+    </p>
+    <input id="submitButton" type="button" value="Submit" on-click="{{submit}}" />
+    <hr />
+    <h2 id="sell">Sell Orders</h2>
+    <template id="sellTable" bind>
+    <table class="ordertable">
+      <thead>
+        <tr>
+          <td width="50%"><a on-click="{{sortSell}}">System</a></td>
+          <td width="10%"><a on-click="{{sortSell}}">Price</a></td>
+          <td width="10%"><a on-click="{{sortSell}}">Qty</a></td>
+          <td width="10%"><a on-click="{{sortSell}}">Jumps</a></td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr template repeat="{{sellOrders}}">
+          <td>{{stationName}}</td>
+          <td>{{price}}</td>
+          <td>{{volume}}</td>
+          <td>{{jumps}}</td>
+        </tr>
+      </tbody>
+    </table>
+    </template>
+    <h2 id="buy">Buy Orders</h2>
+    <template id="buyTable" bind>
+    <table class="ordertable">
+      <thead>
+        <tr>
+          <td width="50%"><a on-click="{{sortBuy}}">System</a></td>
+          <td width="10%"><a on-click="{{sortBuy}}">Price</a></td>
+          <td width="10%"><a on-click="{{sortBuy}}">Qty</a></td>
+          <td width="10%"><a on-click="{{sortBuy}}">Jumps</a></td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr template repeat="{{buyOrders}}">
+          <td>{{stationName}}</td>
+          <td>{{price}}</td>
+          <td>{{volume}}</td>
+          <td>{{jumps}}</td>
+        </tr>
+      </tbody>
+    </table>
+    </template>
+  </template>
+  <script type="application/dart" src="quicklook.dart"></script>
+</polymer-element>

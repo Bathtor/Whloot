@@ -48,7 +48,7 @@ class Neo4JActor extends Actor with ActorLogging {
 
     def receive = {
         case q @ Query(method, url, body) => {
-            println(q);
+            //println(q);
             pipeline(HttpRequest(method = method, uri = url, entity = body)) pipeTo sender;
         }
     }

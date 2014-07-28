@@ -2,6 +2,11 @@ name: Whloot
 description: A sample Polymer application
 dependencies:
     polymer: any
+    xml: any
+    intl: any
 transformers:
 - polymer:
-    entry_points: web/whloot.html
+    entry_points: 
+      - web/whloot.html
+      - web/market.html
+      - web/ops.html

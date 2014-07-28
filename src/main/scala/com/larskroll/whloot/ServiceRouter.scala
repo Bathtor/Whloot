@@ -55,7 +55,7 @@ trait ServiceRouter extends HttpService with CORSDirectives {
     val opService = actorRefFactory.actorOf(Props[OpService]);
     val pathService = actorRefFactory.actorOf(Props[PathService]);
 
-    implicit val timeout = Timeout(30 seconds);
+    implicit val timeout = Timeout(60 seconds);
 
     val conf = Main.system.settings.config;
 
@@ -145,10 +145,16 @@ trait ServiceRouter extends HttpService with CORSDirectives {
                                     path(Right(start), Right(end));
                                 }
                             }
-                        } ~ path("to" / Segment) {end => 
-                        	detachAndRespond { ctx =>
+                        } ~ path("to" / Segment) { end =>
+                            detachAndRespond { ctx =>
                                 ctx.complete {
                                     path(Right(start), Left(end));
+                                }
+                            }
+                        } ~ path("toStation" / IntNumber) { end =>
+                            detachAndRespond { ctx =>
+                                ctx.complete {
+                                    pathStation(Right(start), end);
                                 }
                             }
                         }
@@ -159,10 +165,16 @@ trait ServiceRouter extends HttpService with CORSDirectives {
                                     path(Left(start), Right(end));
                                 }
                             }
-                        } ~ path("to" / Segment) {end => 
-                        	detachAndRespond { ctx =>
+                        } ~ path("to" / Segment) { end =>
+                            detachAndRespond { ctx =>
                                 ctx.complete {
                                     path(Left(start), Left(end));
+                                }
+                            }
+                        } ~ path("toStation" / IntNumber) { end =>
+                            detachAndRespond { ctx =>
+                                ctx.complete {
+                                    pathStation(Left(start), end);
                                 }
                             }
                         }
@@ -242,14 +254,19 @@ trait ServiceRouter extends HttpService with CORSDirectives {
             val res = Await.result(f, 30 seconds).asInstanceOf[PathResponse];
             res match {
                 case SinglePath(route) => Left(route)
-                case PathError(msg) => println("Error: \"\n		" + msg + "\n\""); Right(Failure(ErrorMessage(msg)))
+                case PathError(msg)    => println("Error: \"\n		" + msg + "\n\""); Right(Failure(ErrorMessage(msg)))
             }
         } catch {
             case e: Throwable => Right(Failure(e))
         }
     }
+
+    private def pathStation(start: Either[String, Int], end: Int): Either[data.Route, Failure[data.Route]] = {
+        val sysId = EVEStatic.station2systemId(end);
+        return path(start, sysId.map(id => Right(id)).getOrElse(start)); // 0 route on failure
+    }
 }
 
 case class ErrorMessage(msg: String) extends Throwable(msg) {
-    
+
 }
