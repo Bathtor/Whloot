@@ -4,21 +4,32 @@ import 'dart:html';
 import 'dart:convert';
 import 'package:xml/xml.dart';
 import 'package:intl/intl.dart';
+import 'package:dart_config/config.dart';
+import 'package:dart_config/default_browser.dart';
 export 'dart:html';
 export 'dart:convert';
 
 
-final String apiUrl = "http://127.0.0.1:8012/";
+String apiUrl;
 final String eveCentral = "http://api.eve-central.com/api/";
 final oCcy = new NumberFormat("#,##0.00", "en_US");
+
+
 
 typedef void DataLoadHandler(String responseText);
 
 void apiRequest(String url, DataLoadHandler handler) {
-  HttpRequest.getString(apiUrl+url).then(handler);
+  if (apiUrl == null) {
+    loadConfig().then((Map config) {
+      apiUrl = config["apiUrl"];
+      HttpRequest.getString(apiUrl + url).then(handler);
+    }, onError: (error) => print(error));
+  } else {
+    HttpRequest.getString(apiUrl + url).then(handler);
+  }
 }
 void marketRequest(String url, DataLoadHandler handler) {
-  HttpRequest.getString(eveCentral+url).then(handler);
+  HttpRequest.getString(eveCentral + url).then(handler);
 }
 
 class Loot {
@@ -59,7 +70,7 @@ class Order {
   String stationName;
   String price;
   int volume;
-  
+
   Order.fromXml(XmlElement xml) {
     id = int.parse(xml.attributes.first.value);
     stationName = xml.findElements('station_name').first.text;
@@ -67,8 +78,8 @@ class Order {
     String priceStr = xml.findElements('price').first.text;
     double priceD = double.parse(priceStr);
     price = oCcy.format(priceD);
-    volume =  int.parse(xml.findElements('vol_remain').first.text);
+    volume = int.parse(xml.findElements('vol_remain').first.text);
   }
-  
+
   static fromXmlObj(XmlElement xml) => new Order.fromXml(xml);
 }

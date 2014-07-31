@@ -4,6 +4,7 @@ dependencies:
     polymer: any
     xml: any
     intl: any
+    dart_config: any
 transformers:
 - polymer:
     entry_points: 
