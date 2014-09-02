@@ -1,13 +1,14 @@
 name: Whloot
 description: A sample Polymer application
 dependencies:
-    polymer: any
-    xml: any
-    intl: any
-    dart_config: any
+  dart_config: any
+  intl: any
+  polymer: any
+  quiver: any
+  xml: any
 transformers:
 - polymer:
-    entry_points: 
-      - web/whloot.html
-      - web/market.html
-      - web/ops.html
+    entry_points:
+    - web/whloot.html
+    - web/market.html
+    - web/ops.html

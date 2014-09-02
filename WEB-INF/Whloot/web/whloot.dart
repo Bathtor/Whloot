@@ -69,6 +69,7 @@ class Order {
   int stationId;
   String stationName;
   String price;
+  double priceD;
   int volume;
 
   Order.fromXml(XmlElement xml) {
@@ -76,7 +77,7 @@ class Order {
     stationName = xml.findElements('station_name').first.text;
     stationId = int.parse(xml.findElements('station').first.text);
     String priceStr = xml.findElements('price').first.text;
-    double priceD = double.parse(priceStr);
+    priceD = double.parse(priceStr);
     price = oCcy.format(priceD);
     volume = int.parse(xml.findElements('vol_remain').first.text);
   }

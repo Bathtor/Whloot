@@ -19,4 +19,6 @@ object WhlootJsonProtocol extends DefaultJsonProtocol {
 	implicit val fullSolarSystemFormat = jsonFormat7(FullSolarSystem);
 	implicit val routeFormat = jsonFormat2(Route);
 	implicit val multiRouteFormat = jsonFormat2(MultiRoute);
+	
+	implicit val itemTypeFormat = jsonFormat2(ItemType);
 }

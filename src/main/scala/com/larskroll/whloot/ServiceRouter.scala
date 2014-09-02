@@ -73,7 +73,15 @@ trait ServiceRouter extends HttpService with CORSDirectives {
     val primaryRoute: Route = {
         corsFilter(corsExp) {
             get {
-                path("calc" / IntNumber / IntNumber / LongNumber) { (start, end, tidBound) =>
+                pathPrefix("eve") {
+                    path("marketTypes" / Segment) { pattern =>
+                        detachAndRespond {ctx => 
+                        	ctx.complete {
+                        	    searchMarketTypes(pattern);
+                        	}
+                        }
+                    }
+                } ~ path("calc" / IntNumber / IntNumber / LongNumber) { (start, end, tidBound) =>
                     detachAndRespond { ctx =>
                         ctx.complete {
                             calcPayout(start, end, tidBound);
@@ -182,8 +190,24 @@ trait ServiceRouter extends HttpService with CORSDirectives {
                 } ~ path(Rest) { x =>
                     _.complete(x);
                 }
+            } ~ post {
+                pathPrefix("eve") {
+                    path("marketTypes" / LongNumber) { typeID => 
+                    	detachAndRespond { ctx =>
+                    		ctx.complete {
+                    		    EVEStatic.rateMarketItem(typeID);
+                    		    "OK"
+                    		}
+                    	}
+                    }
+                }
             }
         }
+    }
+    
+    private def searchMarketTypes(pattern: String): List[ItemType] = {
+        println("Searching for " + pattern);
+        EVEStatic.searchMarketItem(pattern);
     }
 
     private def calcPayout(sinceOp: Int, upToOp: Int, tidBound: Long): Either[Payout, Failure[Payout]] = {

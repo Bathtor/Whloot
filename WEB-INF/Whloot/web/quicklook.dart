@@ -1,5 +1,6 @@
 import 'package:polymer/polymer.dart';
 import 'package:xml/xml.dart';
+import 'package:quiver/collection.dart';
 import 'whloot.dart';
 
 @CustomTag('quick-look')
@@ -12,6 +13,8 @@ class QuickLook extends PolymerElement {
   @observable List<ObsOrder> buyOrders = toObservable(new List<ObsOrder>());
 
   @observable bool asc = true;
+  
+  ListMultimap<String, ObsOrder> routes = new ListMultimap<String, ObsOrder>();
 
   QuickLook.created() : super.created() {
   }
@@ -40,9 +43,9 @@ class QuickLook extends PolymerElement {
         break;
       case "Price":
         if (asc) {
-          coll.sort((a, b) => a.price.compareTo(b.price));
+          coll.sort((a, b) => a.priceD.compareTo(b.priceD));
         } else {
-          coll.sort((a, b) => b.price.compareTo(a.price));
+          coll.sort((a, b) => b.priceD.compareTo(a.priceD));
         }
         break;
       case "Qty":
@@ -75,18 +78,26 @@ class QuickLook extends PolymerElement {
     sellOrders.addAll(sO);
     buyOrders.clear();
     buyOrders.addAll(bO);
+    // prepare the routes
+    sellOrders.forEach(prepRoutes);
+    buyOrders.forEach(prepRoutes);
     // get all the jumps
-    sellOrders.forEach(getJumps);
-    buyOrders.forEach(getJumps);
+    routes.forEachKey(getJumps);
   }
 
-  void getJumps(ObsOrder o) {
-    apiRequest("path/from/$system/toStation/${o.stationId}", (responseText) {
+  void getJumps(String key, Iterable<ObsOrder> orders) {
+    apiRequest("path/from/$system/toStation/${orders.first.stationId}", (responseText) {
       var data = JSON.decode(responseText);
       if (data.containsKey('length')) {
-        o.jumps = data['length'] - 1;
+        int l = data['length'] - 1;
+        orders.forEach((o) => o.jumps = l);
       }
     });
+  }
+  
+  void prepRoutes(ObsOrder o) {
+    List<String> parts = o.stationName.split(' ');
+    routes.add(parts[0], o);
   }
 }
 

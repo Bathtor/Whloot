@@ -35,4 +35,12 @@ CREATE TABLE `whloot_transactions` (
   KEY `itemID` (`itemID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `whloot_item_popularity` (
+  `itemID` int(11) NOT NULL,
+  `popularity` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`itemID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 INSERT INTO whloot_members (name) VALUES ("Lars"), ("Alex"), ("Jakob"), ("Chrischi"), ("Ercan"), ("Paris");
+
+INSERT INTO whloot_item_popularity (itemID, popularity) VALUES (29668, 10);
