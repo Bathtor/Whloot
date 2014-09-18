@@ -9,14 +9,100 @@ class QuickLook extends PolymerElement {
   @observable String system = "";
   @observable String item = "";
 
+  @observable int selectedSuggestionI = 1;
+  @observable String selectedSuggestion = "";
+  @observable Map<String, String> suggestions = toObservable(new Map<String, String>());
+
   @observable List<ObsOrder> sellOrders = toObservable(new List<ObsOrder>());
   @observable List<ObsOrder> buyOrders = toObservable(new List<ObsOrder>());
 
   @observable bool asc = true;
-  
+
   ListMultimap<String, ObsOrder> routes = new ListMultimap<String, ObsOrder>();
+  Set<String> systems = new Set<String>();
+
+  var lastSelected;
 
   QuickLook.created() : super.created() {
+    print("Loading systems data...");
+    staticDataRequest("systems.data", systemsDataHandler);
+  }
+
+  void systemsDataHandler(String responseText) {
+    List<String> syss = responseText.split("\n");
+    syss.forEach((s) {
+      systems.add(s);
+    });
+    print("Finished loading systems data!");
+  }
+
+  void systemSelected() {
+    system = selectedSuggestion;
+  }
+
+  void systemFocused(Event e, var detail, Node target) {
+    suggestions.clear();
+    lastSelected = systemSelected;
+
+    suggestions["Jita"] = "Jita";
+    suggestions["Amarr"] = "Amarr";
+    suggestions["Rens"] = "Rens";
+    suggestions["Dodixie"] = "Dodixie";
+    suggestions["Hek"] = "Hek";
+    suggestions["Renyn"] = "Renyn";
+  }
+
+  void systemChanged(var oldvalue) {
+    suggestions.clear();
+    if (system.length >= 2) {
+      systems.where((s) => s.contains(system)).forEach((sys) => suggestions[sys] = sys);
+    } else {
+      suggestions["Jita"] = "Jita";
+      suggestions["Amarr"] = "Amarr";
+      suggestions["Rens"] = "Rens";
+      suggestions["Dodixie"] = "Dodixie";
+      suggestions["Hek"] = "Hek";
+      suggestions["Renyn"] = "Renyn";
+    }
+  }
+  
+  void itemSelected() {
+    item = selectedSuggestion;
+  }
+  
+  void itemFocused(Event e, var detail, Node target) {
+    suggestions.clear();
+    lastSelected = itemSelected;
+    
+    apiRequest("eve/marketTypes", itemDataHandler);
+  }
+  
+  void itemChanged(var oldvalue) {
+    suggestions.clear();
+    if (item.length >= 4) {
+      apiRequest("eve/marketTypes/$item", itemDataHandler);
+    } else {
+      apiRequest("eve/marketTypes", itemDataHandler);
+    }
+  }
+  
+  void itemDataHandler(String responseText) {
+    var data = JSON.decode(responseText);
+    data.forEach((s) {
+      print(s);
+      var itemtype = s[1];
+      if (itemtype != null) {
+        suggestions[itemtype['itemID']] = itemtype['itemName'];
+      } else {
+        suggestions[s['itemID']] = s['itemName'];
+      }
+    } );
+  }
+
+  void selectionChanged(Event e, var detail, Node target) {
+    if (lastSelected != null) {
+      lastSelected();
+    }
   }
 
   void submit(Event e, var detail, Node target) {
@@ -94,7 +180,7 @@ class QuickLook extends PolymerElement {
       }
     });
   }
-  
+
   void prepRoutes(ObsOrder o) {
     List<String> parts = o.stationName.split(' ');
     routes.add(parts[0], o);

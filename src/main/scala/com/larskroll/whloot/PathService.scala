@@ -26,11 +26,10 @@ class PathService extends Actor with ActorLogging {
 
     def receive = {
         case PathAB(start, end) => {
-            val cachedRoute = checkCache(start, end);
-            if (cachedRoute != null) {
-                sender ! SinglePath(cachedRoute);
-            } else {
-                Neo4J tx { implicit api =>
+            val cachedRouteO = checkCache(start, end);
+            cachedRouteO match {
+                case Some(cachedRoute) => sender ! SinglePath(cachedRoute);
+                case None => Neo4J tx { implicit api =>
                     //
                     // Get Node IDs         
                     //
@@ -131,8 +130,8 @@ class PathService extends Actor with ActorLogging {
         }
     }
 
-    private def checkCache(start: Either[String, Int], end: Either[String, Int]): Route = {
-        return routeCache(pathReq2Key(start, end));
+    private def checkCache(start: Either[String, Int], end: Either[String, Int]): Option[Route] = {
+        routeCache.get(pathReq2Key(start, end));
     }
 
     private def addCache(start: Either[String, Int], end: Either[String, Int], route: Route) {

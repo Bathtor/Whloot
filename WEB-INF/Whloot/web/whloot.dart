@@ -31,6 +31,9 @@ void apiRequest(String url, DataLoadHandler handler) {
 void marketRequest(String url, DataLoadHandler handler) {
   HttpRequest.getString(eveCentral + url).then(handler);
 }
+void staticDataRequest(String url, DataLoadHandler handler) {
+  HttpRequest.getString(url).then(handler);
+}
 
 class Loot {
   final int opId;

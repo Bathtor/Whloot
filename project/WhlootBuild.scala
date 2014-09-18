@@ -14,7 +14,7 @@ object CsiBuild extends Build {
       name := "Whloot",
       organization := "com.larskroll",
       version := "0.1-SNAPSHOT",
-      scalaVersion := "2.10.2",
+      scalaVersion := "2.10.3",
       //scalacOptions += "-Ydependent-method-types",
       scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature", "-language:postfixOps", "-language:implicitConversions"),
       resolvers += "Typesafe Releases" at "http://repo.typesafe.com/typesafe/releases",

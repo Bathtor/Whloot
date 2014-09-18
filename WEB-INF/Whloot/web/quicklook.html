@@ -8,13 +8,22 @@
         font-weight: bold;
       }
     </style>
-    <p id="keyP">
-      Current System: <input type="text" id="systemField" value="{{system}}" />
-    </p>
-    <p id="keyP">
-      Item: <input type="text" id="itemField" value="{{item}}"/>
-    </p>
-    <input id="submitButton" type="button" value="Submit" on-click="{{submit}}" />
+    <table id="inputTable">
+      <tr>
+        <td>Current System: </td><td><input type="text" id="systemField" value="{{system}}" on-focus="{{systemFocused}}" on-change="{{systemChanged}}"/></td>
+        <td rowspan="3">
+          <select id="suggestionSelect" size="5" selectedIndex="{{selectedSuggestionI}}" value="{{selectedSuggestion}}" on-change="{{selectionChanged}}" style="width: 20em;">
+            <option template repeat="{{key in suggestions.keys}}" value="{{key}}">{{ suggestions[key] }}</option>
+          </select>
+        </td>
+      </tr> 
+      <tr> 
+        <td>Item: </td><td><input type="text" id="itemField" value="{{item}}" on-focus="{{itemFocused}}" on-change="{{itemChanged}}"/></td>
+      </tr>
+      <tr>
+        <td colspan="2" style="text-align: center"><input id="submitButton" type="button" value="Submit" on-click="{{submit}}" /></td>
+      </tr>
+    </table>
     <hr />
     <h2 id="sell">Sell Orders</h2>
     <template id="sellTable" bind>

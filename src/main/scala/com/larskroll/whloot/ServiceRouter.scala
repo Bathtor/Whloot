@@ -74,7 +74,11 @@ trait ServiceRouter extends HttpService with CORSDirectives {
         corsFilter(corsExp) {
             get {
                 pathPrefix("eve") {
-                    path("marketTypes" / Segment) { pattern =>
+                    path("marketTypes") {
+                        detachAndRespond {ctx => 
+                        	ctx.complete(EVEStatic.topItems.toList);
+                        }
+                    } ~ path("marketTypes" / Segment) { pattern =>
                         detachAndRespond {ctx => 
                         	ctx.complete {
                         	    searchMarketTypes(pattern);
